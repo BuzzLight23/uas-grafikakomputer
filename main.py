@@ -140,11 +140,6 @@ backLight = [
 ]
 
 def draw_geometry(vertices, gl_mode, color=None):
-    """
-    Fungsi helper standar.
-    CATATAN: Logika pergerakan (Z += movement) DIHAPUS dari sini.
-    Kita akan memindahkan seluruh sistem koordinat mobil di fungsi display().
-    """
     RED_MAIN = (0.85, 0.10, 0.10)
     RED_DARK = (0.55, 0.05, 0.05)
     RED_LIGHT = (0.95, 0.25, 0.25)
@@ -223,8 +218,6 @@ def display():
     glLoadIdentity()
 
     # --- PENGATURAN KAMERA BARU ---
-    # Mengubah koordinat polar (sudut) ke koordinat kartesius untuk posisi kamera
-    # Agar kamera bisa mengorbit objek
     camX = camera_distance * math.sin(math.radians(camera_angle_y)) * math.cos(math.radians(camera_angle_x))
     camY = camera_distance * math.sin(math.radians(camera_angle_x))
     camZ = camera_distance * math.cos(math.radians(camera_angle_y)) * math.cos(math.radians(camera_angle_x))
@@ -245,8 +238,6 @@ def display():
     
     # 2. Putar mobil sesuai arah hadapnya
     glRotatef(car_heading, 0, 1, 0)
-
-    # Sekarang gambar semua bagian mobil relatif terhadap (0,0,0) lokal mobil
     
     # Body Utama
     draw_geometry(frontBody, GL_QUAD_STRIP)
@@ -301,7 +292,7 @@ def display():
     # Ban
     draw_tires()
 
-    glPopMatrix() # Selesai menggambar mobil
+    glPopMatrix() 
 
     glutSwapBuffers()
 
@@ -375,7 +366,6 @@ def keyboard(key, x, y):
     move_speed = 0.5
     
     # --- LOGIKA GERAK MOBIL & BELOK ---
-    # Kita update posisi (x,z) berdasarkan arah hadap (heading) saat ini
     
     if key_str == 'w': # MAJU
         # Jika ban belok, ubah arah hadap mobil perlahan
