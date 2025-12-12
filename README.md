@@ -48,7 +48,7 @@ A 3D interactive car model built with Python and OpenGL, featuring realistic ste
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/3d-car-opengl.git
+git clone https://github.com/BuzzLight23/uas-grafikakomputer.git
 cd 3d-car-opengl
 ```
 
@@ -57,11 +57,7 @@ cd 3d-car-opengl
 pip install PyOpenGL PyOpenGL-accelerate
 ```
 
-## 🚀 Usage
-
-Run the program:
-```bash
-python car_model.py
+## 
 ```
 
 The window will open showing the red car model on a green ground with road markings.

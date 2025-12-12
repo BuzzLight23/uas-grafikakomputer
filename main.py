@@ -1,3 +1,15 @@
+"""
+📋 Prerequisites
+
+- Python 3.7 or higher
+- PyOpenGL
+- PyOpenGL-accelerate
+
+📄 Install required dependencies: pip install PyOpenGL PyOpenGL-accelerate
+
+🚀 Run the program: python car_model.py
+"""
+
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
