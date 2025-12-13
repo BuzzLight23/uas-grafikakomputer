@@ -7,7 +7,7 @@
 
 📄 Install required dependencies: pip install PyOpenGL PyOpenGL-accelerate
 
-🚀 Run the program: python car_model.py
+🚀 Run the program: python uas_grafkom_kel8.py
 """
 
 from OpenGL.GL import *
@@ -16,7 +16,7 @@ from OpenGL.GLU import *
 import sys
 import math
 
-# --- Variabel Global ---
+#  Variabel Global 
 # Kamera
 camera_angle_x = 20.0  # Sudut vertikal (atas/bawah)
 camera_angle_y = 0.0   # Sudut horizontal (kiri/kanan)
@@ -30,9 +30,9 @@ speed = 0.0
 
 # Mobil
 steer_angle = 0.0       # Sudut belok roda depan
-MAX_STEER = 45.0        # Maksimal belok 45 derajat
+MAX_STEER = 45.0       
 
-# --- Variabel Animasi Pintu & Hood ---
+#  Variabel Animasi Pintu & Hood 
 left_door_angle = 0.0
 left_door_state = 0   # 0: Tutup, 1: Buka, 2: Terbuka, 3: Tutup
 right_door_angle = 0.0
@@ -48,7 +48,7 @@ def init():
     glClearColor(0.0, 0.0, 0.0, 1.0) # Latar belakang hitam
     glEnable(GL_DEPTH_TEST)
 
-# --- Definisi Vertex ---
+#  Definisi Vertex 
 ground = [
     [-8,-0.5,60.0], [8,-0.5,60.0], [8,-0.5,-60.0], [-8,-0.5,-60.0],
     [-40,-0.6,60.0], [40,-0.6,60.0], [40,-0.6,-60.0], [-40,-0.6,-60.0],
@@ -161,7 +161,6 @@ def draw_geometry(vertices, gl_mode, color=None):
     
     glBegin(gl_mode)
     for i, v in enumerate(vertices):
-        # Penentuan warna (Sama seperti kode asli)
         if color:
             glColor3f(color[0], color[1], color[2])
         elif vertices is ground:
@@ -208,7 +207,7 @@ def draw_tires():
     for x, y, z, is_front in wheels:
         glPushMatrix()
         
-        # 1. Posisikan roda di tempatnya pada chassis
+        # 1. Posisikan roda di chassis
         glTranslatef(x, y, z)
         
         # 2. Jika roda depan, putar (Steering)
@@ -229,7 +228,7 @@ def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
-    # --- PENGATURAN KAMERA BARU ---
+    #  PENGATURAN KAMERA BARU 
     camX = camera_distance * math.sin(math.radians(camera_angle_y)) * math.cos(math.radians(camera_angle_x))
     camY = camera_distance * math.sin(math.radians(camera_angle_x))
     camZ = camera_distance * math.cos(math.radians(camera_angle_y)) * math.cos(math.radians(camera_angle_x))
@@ -239,10 +238,10 @@ def display():
               car_x, 1.0, car_z,                 # Titik yang dilihat (Pusat Mobil)
               0.0, 1.0, 0.0)                     # Up Vector
 
-    # --- GAMBAR GROUND (Lantai) ---
+    #  GAMBAR GROUND (Lantai) 
     draw_geometry(ground, GL_QUADS)
 
-    # --- GAMBAR MOBIL ---
+    #  GAMBAR MOBIL 
     glPushMatrix()
     
     # 1. Pindahkan mobil ke posisi dunianya (Physics Update)
@@ -303,9 +302,7 @@ def display():
 
     # Ban
     draw_tires()
-
     glPopMatrix() 
-
     glutSwapBuffers()
 
 def reshape(w, h):
@@ -377,15 +374,12 @@ def keyboard(key, x, y):
     
     move_speed = 0.5
     
-    # --- LOGIKA GERAK MOBIL & BELOK ---
-    
+    #  LOGIKA GERAK MOBIL & BELOK 
     if key_str == 'w': # MAJU
         # Jika ban belok, ubah arah hadap mobil perlahan
         if abs(steer_angle) > 1.0:
             car_heading += steer_angle * 0.05
         
-        # Hitung posisi baru (Trigonometri dasar)
-        # +Z di model Anda adalah Depan
         car_x += math.sin(math.radians(car_heading)) * move_speed
         car_z += math.cos(math.radians(car_heading)) * move_speed
 
@@ -397,7 +391,7 @@ def keyboard(key, x, y):
         car_x -= math.sin(math.radians(car_heading)) * move_speed
         car_z -= math.cos(math.radians(car_heading)) * move_speed
     
-    # Steering (Belok Roda Depan Saja)
+    # Steering 
     elif key_str == 'a':
         steer_angle += 2.0
         if steer_angle > MAX_STEER: steer_angle = MAX_STEER
@@ -424,7 +418,7 @@ def scroll(button, dir, x, y):
     glutPostRedisplay()
 
 def main():
-    print("--- KONTROL BARU ---")
+    print(" KONTROL BARU ")
     print("[Arrow Keys]     : Rotasi Kamera Mengelilingi Mobil")
     print("[Scroll]         : Zoom In/Out")
     print("[W] / [S]        : Gas (Maju) / Rem (Mundur) -> Mobil akan berbelok jika ban miring")
@@ -440,8 +434,8 @@ def main():
 
     glutDisplayFunc(display)
     glutReshapeFunc(reshape)
-    glutSpecialFunc(specialKey)  # Arrow keys untuk kamera
-    glutKeyboardFunc(keyboard)   # W/A/S/D untuk mobil
+    glutSpecialFunc(specialKey)  
+    glutKeyboardFunc(keyboard)  
     glutMouseWheelFunc(scroll) 
     glutTimerFunc(0, time_callback, 0)
 
